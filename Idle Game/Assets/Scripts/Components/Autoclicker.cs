@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Autoclicker : MonoBehaviour
+public class Autoclicker : MonoBehaviour, IPointerClickHandler
 {
     public ShellManager shellManager;
     public float tickTime = 3f;
@@ -28,7 +29,7 @@ public class Autoclicker : MonoBehaviour
         }
     }
 
-    public void AddClicker()
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (shellManager.Shells >= 15)
         {
