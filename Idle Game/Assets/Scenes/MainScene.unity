@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 263662334}
   - component: {fileID: 263662333}
   - component: {fileID: 263662332}
-  - component: {fileID: 263662331}
+  - component: {fileID: 263662335}
   m_Layer: 5
   m_Name: BeachComber
   m_TagString: Untagged
@@ -163,22 +163,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -45.48}
   m_SizeDelta: {x: 160, y: 25.07}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &263662331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263662329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32a08fdb27a1eb447ad0fd607d74eec4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shellManager: {fileID: 1159306131}
-  tickTime: 10
-  autoclickerText: {fileID: 1276494894}
-  progressBar: {fileID: 1639880555}
 --- !u!114 &263662332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +245,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263662329}
   m_CullTransparentMesh: 1
+--- !u!114 &263662335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263662329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f096fc06920de3148a0df1581cc07b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shellManager: {fileID: 1159306131}
+  tickTime: 3
+  autoclickerText: {fileID: 1276494894}
+  progressBar: {fileID: 1639880555}
+  multiplier: 5
+  paymentPrice: 75
+  upgradeName: Beach Comber
+  numOfUnlockedUpgrades: 0
 --- !u!1 &398437934
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +479,10 @@ MonoBehaviour:
   tickTime: 3
   autoclickerText: {fileID: 2001153075}
   progressBar: {fileID: 398437936}
+  multiplier: 1
+  paymentPrice: 15
+  upgradeName: Autoclicker
+  numOfUnlockedUpgrades: 0
 --- !u!1 &526630449
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,6 +941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9daf8ea6a9e590b4dadb0d3eaf598c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Autoclicker: {fileID: 461616287}
+  BeachComber: {fileID: 263662329}
   shellText: {fileID: 1841012789}
 --- !u!1 &1252729580
 GameObject:

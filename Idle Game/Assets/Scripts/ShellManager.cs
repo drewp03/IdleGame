@@ -5,9 +5,12 @@ using TMPro;
 
 public class ShellManager : MonoBehaviour
 {
-    public TextMeshProUGUI shellText;
+    public GameObject Autoclicker;
+    public GameObject BeachComber;
 
+    public TextMeshProUGUI shellText;
     private double shells;
+
     public double Shells
     {
         get
@@ -24,5 +27,17 @@ public class ShellManager : MonoBehaviour
     void Start()
     {
         shellText.text = ("Shells: " + shells);
+
+        Autoclicker.SetActive(false);
+        BeachComber.SetActive(false);
+    }
+
+    void Update()
+    {
+        if(shells >= 15)
+            Autoclicker.SetActive(true);
+
+        if(shells >= 75)
+            BeachComber.SetActive(true);
     }
 }

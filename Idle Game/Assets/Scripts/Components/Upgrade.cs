@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Autoclicker : MonoBehaviour, IPointerClickHandler
+public class Upgrade : MonoBehaviour, IPointerClickHandler
 {
     public ShellManager shellManager;
     public float tickTime = 3f;
@@ -15,13 +15,27 @@ public class Autoclicker : MonoBehaviour, IPointerClickHandler
     public TextMeshProUGUI autoclickerText;
     public Image progressBar;
 
+    public float multiplier;
+    public float paymentPrice;
+
+    public string upgradeName;
+
+    public int numOfUnlockedUpgrades;
+
+    public enum UpgradeState
+    {
+        Locked,
+        Available,
+        Purchased
+    }
+
     void Update()
     {
         if (clickers > 0)
         {
             if (timer >= tickTime && clickers > 0)
             {
-                shellManager.Shells += clickers;
+                shellManager.Shells += clickers * multiplier;
                 timer = 0f;
             }
             timer += Time.deltaTime;
@@ -31,11 +45,11 @@ public class Autoclicker : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (shellManager.Shells >= 15)
+        if (shellManager.Shells >= paymentPrice)
         {
-            shellManager.Shells -= 15;
+            shellManager.Shells -= paymentPrice;
             clickers++;
-            autoclickerText.text = ("Buy Autoclicker (15 Shells)\nAutoclickers: " + clickers);
+            autoclickerText.text = ("Buy "+upgradeName+" ("+paymentPrice+" Shells)\n" +upgradeName+ ": " + clickers);
         }
     }
 }
