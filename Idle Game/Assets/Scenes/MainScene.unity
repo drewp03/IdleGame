@@ -257,14 +257,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f096fc06920de3148a0df1581cc07b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shellManager: {fileID: 1159306131}
+  resourceManager: {fileID: 1159306131}
   tickTime: 3
   autoclickerText: {fileID: 1276494894}
   progressBar: {fileID: 1639880555}
   multiplier: 5
   paymentPrice: 75
   upgradeName: Beach Comber
-  numOfUnlockedUpgrades: 0
 --- !u!1 &398437934
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,14 +474,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f096fc06920de3148a0df1581cc07b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shellManager: {fileID: 1159306131}
+  resourceManager: {fileID: 1159306131}
   tickTime: 3
   autoclickerText: {fileID: 2001153075}
   progressBar: {fileID: 398437936}
   multiplier: 1
   paymentPrice: 15
   upgradeName: Autoclicker
-  numOfUnlockedUpgrades: 0
 --- !u!1 &526630449
 GameObject:
   m_ObjectHideFlags: 0
@@ -908,7 +906,7 @@ GameObject:
   - component: {fileID: 1159306130}
   - component: {fileID: 1159306131}
   m_Layer: 0
-  m_Name: ShellsManager
+  m_Name: ResourcesManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -941,8 +939,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9daf8ea6a9e590b4dadb0d3eaf598c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Autoclicker: {fileID: 461616287}
-  BeachComber: {fileID: 263662329}
+  upgrades:
+  - {fileID: 461616287}
+  - {fileID: 263662329}
   shellText: {fileID: 1841012789}
 --- !u!1 &1252729580
 GameObject:
@@ -1462,7 +1461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf315f61838166b41b522acf7bfe07cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shellManager: {fileID: 1159306131}
+  resourceManager: {fileID: 1159306131}
+  currency: 0
 --- !u!114 &1700593616
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,10 +5,12 @@ using UnityEngine.EventSystems;
 
 public class PlusOneButton : MonoBehaviour, IPointerClickHandler
 {
-    public ShellManager shellManager;
+    public ResourceManager resourceManager;         // Resource Manager script
+    public ResourceManager.CurrencyType currency;   // Currency type enum from the Resource Manager script. Currency types can be selected manually in the Unity editor
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        shellManager.Shells += 1;
+        // Increments the selected currency when the button is pressed
+        resourceManager.IncrementCurrency(currency);
     }
 }
