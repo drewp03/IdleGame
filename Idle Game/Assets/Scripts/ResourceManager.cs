@@ -20,6 +20,9 @@ public class ResourceManager : MonoBehaviour
     public TextMeshProUGUI shellText;
     private double shells;
 
+    public TextMeshProUGUI knivesText;
+    private double knives;
+
     public double Shells
     {
         get
@@ -34,7 +37,18 @@ public class ResourceManager : MonoBehaviour
     }
 
     //The other currency types. Do what was done above for these
-    private double knives;
+    public double Knives
+    {
+        get
+        {
+            return knives;
+        }
+        set
+        {
+            knives = value;
+            knivesText.text = ("Knives: " + knives);
+        }
+    }
 
     private double raiStones;
 
@@ -42,6 +56,7 @@ public class ResourceManager : MonoBehaviour
     {
         // Set the text for each currency type
         shellText.text = ("Shells: " + shells);
+        knivesText.text = ("Knives: " + knives);
 
         // Sets all upgrade buttons to inactive
         for (int i = 0; i < upgrades.Count; i++)
