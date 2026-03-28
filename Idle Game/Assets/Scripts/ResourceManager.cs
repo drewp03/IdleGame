@@ -17,11 +17,13 @@ public class ResourceManager : MonoBehaviour
     }
 
     // Will want to set this up for the other currency types
-    public TextMeshProUGUI shellText;
+    
     private double shells;
-
-    public TextMeshProUGUI knivesText;
     private double knives;
+
+    public TextMeshProUGUI shellText;
+    public TextMeshProUGUI knivesText;
+    
 
     public double Shells
     {
@@ -68,11 +70,12 @@ public class ResourceManager : MonoBehaviour
     void Update()
     {
         // Makes the upgrade button active once the player can afford the upgrade
-        for (int i = 0; i < upgrades.Count; i++)
-        {
-            if (shells >= upgrades[i].GetComponent<Upgrade>().paymentPrice)     // We're gonna want to modify this to work with every currency type instead of just shells
-            {
+        for (int i = 0; i < upgrades.Count; i++)                                 //THIS LOOP MAY CAUSE PROBLEMS
+        {                                                                          //AFTER SOMETHING GETS SET AS active
+            if (shells >= upgrades[i].GetComponent<Upgrade>().paymentPrice)     //IT NON STOP CHECKS IT
+            {                                                                   //UNCOMMENT DEBUG LINE TO SEE WHAT I MEAN
                 upgrades[i].SetActive(true);
+                //Debug.Log(upgrades[i].GetComponent<Upgrade>().paymentPrice);
             }
         }
     }
@@ -86,11 +89,13 @@ public class ResourceManager : MonoBehaviour
                 Shells += 1;            // These numbers can be different for each if we so choose
                 break;
             case CurrencyType.Knives:
-                knives += 1;
+                Knives += 1;
                 break;
             case CurrencyType.RaiStones:
                 raiStones += 1;
                 break;
         }
     }
+
+
 }

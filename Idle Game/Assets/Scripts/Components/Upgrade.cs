@@ -11,6 +11,12 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
     public float tickTime = 3f;                 // Time it takes for the upgrade to run
     private float timer;                        // Timer variable
     private int tier;                           // Number of times the upgrade has been purchased
+    public enum CurrencyType
+    {
+        Shells,
+        Knives
+    }
+    public CurrencyType currencyType;
 
     // UI and button elements
     public TextMeshProUGUI autoclickerText;
@@ -49,12 +55,12 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
 
                 if (Random.Range(0f, 100f) < critChance)
                 {
-                    resourceManager.Shells += tier * multiplier * (critMult / 100);    // Will need to modify this to work with any currency type
+                    AddCurrency(tier * multiplier * (critMult/100f));    // Will need to modify this to work with any currency type
                     Debug.Log("Crit triggered");
                 }
                 else
                 {
-                    resourceManager.Shells += tier * multiplier;    // Will need to modify this to work with any currency type
+                    AddCurrency(tier * multiplier);    // Will need to modify this to work with any currency type
                 }
             }
             timer += Time.deltaTime;
@@ -65,16 +71,52 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
     // Activates whenever the upgrade button is pressed
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (resourceManager.Shells >= paymentPrice)
+        if (GetCurrency() >= paymentPrice)
         {
-            resourceManager.Shells -= paymentPrice;             // Will need to modify this to work with any currency type
+            SpendCurrency(paymentPrice) ; // Will need to modify this to work with any currency type
             tier++;
-            autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " Shells)\n" + upgradeName + ": " + tier);   // Displays text on the button. Should probably modify this to show how many currency the upgrade actually gives
+
+            string currencyName = currencyType.ToString();
+            autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " " + currencyName + ")\n" + upgradeName + ": " + tier);   // Displays text on the button. Should probably modify this to show how many currency the upgrade actually gives
         }
     }
 
-    public void IncreaseCrit()
+    double GetCurrency()
     {
+        switch (currencyType)
+        {
+            case CurrencyType.Shells:
+                return resourceManager.Shells;
+            case CurrencyType.Knives:
+                return resourceManager.Knives;
+            default:
+                return 0;
+        }
+    }
 
+    void AddCurrency(float amount)
+    {
+        switch(currencyType)
+        {
+            case CurrencyType.Shells:
+                resourceManager.Shells += amount;
+                break;
+            case CurrencyType.Knives:
+                resourceManager.Knives += amount;
+                break;
+        }
+    }
+
+    void SpendCurrency(int amount)
+    {
+        switch(currencyType)
+        {
+            case CurrencyType.Shells:
+                resourceManager.Shells -= amount;
+                break;
+            case CurrencyType.Knives:
+                resourceManager.Knives -= amount;
+                break;
+        }
     }
 }
