@@ -30,13 +30,13 @@ public class AutoclickerCrit : MonoBehaviour
         if (resourceManager.Shells >= 50 && level < maxLevel)
         {
             autoclicker.critMult += multIncreasePerLevel;
-            autoclicker.chance += chancePerLevel;
+            autoclicker.critChance += chancePerLevel;
         }
         RefreshText();
     }
     
     void RefreshText()
     {
-        upgradeText.text = $"Autoclicker Upgrade: Crit Chance\n({cost} Shells, {level}/{maxLevel})\nCurrent Stats: {chance}% Chance, {mult}% Mult";
+        upgradeText.text = $"Autoclicker Upgrade: Crit Chance\n({cost} Shells, {level}/{maxLevel})\nCurrent Stats: {autoclicker.critChance}% Chance, {autoclicker.critMult}% Mult";
     }
 }

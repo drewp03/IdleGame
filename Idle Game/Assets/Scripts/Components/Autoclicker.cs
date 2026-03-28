@@ -21,8 +21,8 @@ public class Autoclicker : MonoBehaviour, IPointerClickHandler
 
     public string upgradeName;                  // Upgrade name
 
-    private int critChance;
-    private int critMult;
+    public int critChance;
+    public int critMult;
 
     // We probably won't need this enum
     public enum UpgradeState
