@@ -21,12 +21,21 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
 
     public string upgradeName;                  // Upgrade name
 
+    public int critChance;
+    public int critMult;
+
     // We probably won't need this enum
     public enum UpgradeState
     {
         Locked,
         Available,
         Purchased
+    }
+
+    void Start()
+    {
+        critChance = 0;
+        critMult = 100;
     }
 
     void Update()
@@ -36,8 +45,17 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
         {
             if (timer >= tickTime && tier > 0)
             {
-                resourceManager.Shells += tier * multiplier;    // Will need to modify this to work with any currency type
                 timer = 0f;
+
+                if (Random.Range(0f, 100f) < critChance)
+                {
+                    resourceManager.Shells += tier * multiplier * (critMult / 100);    // Will need to modify this to work with any currency type
+                    Debug.Log("Crit triggered");
+                }
+                else
+                {
+                    resourceManager.Shells += tier * multiplier;    // Will need to modify this to work with any currency type
+                }
             }
             timer += Time.deltaTime;
             progressBar.fillAmount = timer / tickTime;
@@ -51,7 +69,12 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
         {
             resourceManager.Shells -= paymentPrice;             // Will need to modify this to work with any currency type
             tier++;
-            autoclickerText.text = ("Buy "+upgradeName+" ("+paymentPrice+" Shells)\n" +upgradeName+ ": " + tier);   // Displays text on the button. Should probably modify this to show how many currency the upgrade actually gives
+            autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " Shells)\n" + upgradeName + ": " + tier);   // Displays text on the button. Should probably modify this to show how many currency the upgrade actually gives
         }
+    }
+
+    public void IncreaseCrit()
+    {
+
     }
 }

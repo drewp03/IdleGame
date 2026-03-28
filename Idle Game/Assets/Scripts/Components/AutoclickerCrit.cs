@@ -5,11 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class AutoclickerCrit : MonoBehaviour
+public class AutoclickerCrit : MonoBehaviour, IPointerClickHandler
 {
     public TextMeshProUGUI upgradeText;
     public ResourceManager resourceManager;
-    public Autoclicker autoclicker;
+    public Upgrade autoclicker;
+    public GameObject goldBorder;
 
     private int level;
     public int cost = 50;
@@ -19,18 +20,26 @@ public class AutoclickerCrit : MonoBehaviour
     public int multIncreasePerLevel = 50;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         level = 0;
         RefreshText();
+        goldBorder.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (resourceManager.Shells >= 50 && level < maxLevel)
+        if (resourceManager.Shells >= cost && level < maxLevel)
         {
             autoclicker.critMult += multIncreasePerLevel;
             autoclicker.critChance += chancePerLevel;
+            resourceManager.Shells -= cost;
+            level++;
+            
+            if (level == maxLevel)
+            {
+                goldBorder.SetActive(true);
+            }
         }
         RefreshText();
     }
