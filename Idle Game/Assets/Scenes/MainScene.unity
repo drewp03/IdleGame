@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 1159306131}
-  tickTime: 3
+  tickTime: 10
   autoclickerText: {fileID: 1276494894}
   progressBar: {fileID: 1639880555}
   multiplier: 5
