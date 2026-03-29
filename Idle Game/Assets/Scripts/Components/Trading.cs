@@ -23,7 +23,7 @@ public class Trading : MonoBehaviour
     {
         if (resourceManager.Shells >= knivesValueInShells)
         {
-            resourceManager.Shells -= 100;
+            resourceManager.Shells -= knivesValueInShells;
             resourceManager.Knives++;
         }
     }
@@ -32,7 +32,7 @@ public class Trading : MonoBehaviour
     {
         if (resourceManager.Knives > 0)
         {
-            resourceManager.Shells += 100;
+            resourceManager.Shells += knivesValueInShells;
             resourceManager.Knives--;
         }
     }
