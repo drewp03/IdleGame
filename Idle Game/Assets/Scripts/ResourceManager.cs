@@ -71,9 +71,19 @@ public class ResourceManager : MonoBehaviour
         // Makes the upgrade button active once the player can afford the upgrade
         for (int i = 0; i < upgrades.Count; i++)
         {
-            if (shells >= upgrades[i].GetComponent<Upgrade>().paymentPrice)     // We're gonna want to modify this to work with every currency type instead of just shells
+            if (upgrades[i].GetComponent<Upgrade>().currency == CurrencyType.Shells)
             {
-                upgrades[i].SetActive(true);
+                if (shells >= upgrades[i].GetComponent<Upgrade>().paymentPrice)
+                {
+                    upgrades[i].SetActive(true);
+                }
+            }
+            else if (upgrades[i].GetComponent<Upgrade>().currency == CurrencyType.Knives)
+            {
+                if (knives >= upgrades[i].GetComponent<Upgrade>().paymentPrice)
+                {
+                    upgrades[i].SetActive(true);
+                }
             }
         }
     }
