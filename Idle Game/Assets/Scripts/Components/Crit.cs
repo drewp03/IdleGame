@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class AutoclickerCrit : MonoBehaviour, IPointerClickHandler
+public class Crit : MonoBehaviour, IPointerClickHandler
 {
     public TextMeshProUGUI upgradeText;
     public ResourceManager resourceManager;
-    public Upgrade autoclicker;
+    public Upgrade upgrade;
     public GameObject goldBorder;
 
     private int level;
@@ -18,6 +18,8 @@ public class AutoclickerCrit : MonoBehaviour, IPointerClickHandler
 
     public int chancePerLevel = 5;
     public int multIncreasePerLevel = 50;
+
+    public ResourceManager.CurrencyType currency;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,11 +31,12 @@ public class AutoclickerCrit : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (resourceManager.Shells >= cost && level < maxLevel)
+        if (resourceManager.GetCurrencyAmount(currency) >= cost && level < maxLevel)
         {
-            autoclicker.critMult += multIncreasePerLevel;
-            autoclicker.critChance += chancePerLevel;
-            resourceManager.Shells -= cost;
+            upgrade.critMult += multIncreasePerLevel;
+            upgrade.critChance += chancePerLevel;
+            //resourceManager.Shells -= cost;
+            resourceManager.DecrimentCurrency(currency, cost);
             level++;
             
             if (level == maxLevel)
@@ -46,6 +49,6 @@ public class AutoclickerCrit : MonoBehaviour, IPointerClickHandler
     
     void RefreshText()
     {
-        upgradeText.text = $"Autoclicker Upgrade: Crit Chance\n({cost} Shells, {level}/{maxLevel})\nCurrent Stats: {autoclicker.critChance}% Chance, {autoclicker.critMult}% Mult";
+        upgradeText.text = $"{upgrade.name} Upgrade: Crit Chance\n({cost} {currency}, {level}/{maxLevel})\nCurrent Stats: {upgrade.critChance}% Chance, {upgrade.critMult}% Mult";
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Diagnostics;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -86,11 +87,78 @@ public class ResourceManager : MonoBehaviour
                 Shells += 1;            // These numbers can be different for each if we so choose
                 break;
             case CurrencyType.Knives:
-                knives += 1;
+                Knives += 1;
                 break;
             case CurrencyType.RaiStones:
                 raiStones += 1;
                 break;
+        }
+    }
+
+    public void IncrementCurrency(CurrencyType currency, int tier, float multiplier)
+    {
+        // Overload for incrementing currency with upgrades
+        switch (currency)
+        {
+            case CurrencyType.Shells:
+                Shells += tier * multiplier;
+                break;
+            case CurrencyType.Knives:
+                Knives += tier * multiplier;
+                break;
+            case CurrencyType.RaiStones:
+                raiStones += tier * multiplier;
+                break;
+        }
+    }
+
+    public void IncrementCurrency(CurrencyType currency, int tier, float multiplier, int crit)
+    {
+        // Overload for incrementing currency with upgrades when the crit goes off
+        switch (currency)
+        {
+            case CurrencyType.Shells:
+                Shells += tier * multiplier * crit;
+                break;
+            case CurrencyType.Knives:
+                Knives += tier * multiplier * crit;
+                break;
+            case CurrencyType.RaiStones:
+                raiStones += tier * multiplier * crit;
+                break;
+        }
+    }
+
+    public void DecrimentCurrency(CurrencyType currency, int price)
+    {
+        // Decriments the currency type when a purchase is made with them
+        switch (currency)
+        {
+            case CurrencyType.Shells:
+                Shells -= price;
+                break;
+            case CurrencyType.Knives:
+                Knives -= price;
+                break;
+            case CurrencyType.RaiStones:
+                raiStones -= price;
+                break;
+        }
+    }
+
+    public double GetCurrencyAmount(CurrencyType currency)
+    {
+        // Get the amount of a specific currency when required in other scripts
+        switch(currency)
+        {
+            case CurrencyType.Shells:
+                return Shells;
+            case CurrencyType.Knives:
+                return Knives;
+            case CurrencyType.RaiStones:
+                return raiStones;
+            default:
+                return 0;
         }
     }
 }

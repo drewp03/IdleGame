@@ -534,6 +534,7 @@ MonoBehaviour:
   multiplier: 5
   paymentPrice: 75
   upgradeName: Beach Comber
+  currency: 0
   critChance: 0
   critMult: 0
 --- !u!1 &338084625
@@ -891,6 +892,7 @@ MonoBehaviour:
   multiplier: 1
   paymentPrice: 15
   upgradeName: Autoclicker
+  currency: 0
   critChance: 0
   critMult: 0
 --- !u!1 &484158974
@@ -2230,12 +2232,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeText: {fileID: 1229737050}
   resourceManager: {fileID: 1159306131}
-  autoclicker: {fileID: 461616293}
+  upgrade: {fileID: 461616293}
   goldBorder: {fileID: 1363056688}
   cost: 50
   maxLevel: 5
   chancePerLevel: 5
   multIncreasePerLevel: 50
+  currency: 0
 --- !u!1 &1499283370
 GameObject:
   m_ObjectHideFlags: 0
