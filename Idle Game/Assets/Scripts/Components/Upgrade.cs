@@ -16,6 +16,10 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
     public TextMeshProUGUI autoclickerText;
     public Image progressBar;
 
+    public GameObject popupPrefab;
+    public Transform canvasTransform;
+    bool purchaseSuccess;
+
     public float multiplier;                        // How much currency the upgrade gives 
     public int paymentPrice;                        // How much the upgrade costs
 
@@ -67,11 +71,20 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
             resourceManager.DecrimentCurrency(currency, paymentPrice);
             tier++;
             autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " " + currency + ")\n" + upgradeName + ": " + tier);   // Displays text on the button. Should probably modify this to show how many currency the upgrade actually gives
+            
+            purchaseSuccess = true;
         }
-    }
 
-    public void IncreaseCrit()
-    {
+        else
+            purchaseSuccess = false;
+        
+        string message = purchaseSuccess ? "Successfully Purchased " + upgradeName : "Purchase Failed";
 
+        GameObject popup = Instantiate(popupPrefab, canvasTransform);
+
+        RectTransform rect = popup.GetComponent<RectTransform>();
+        rect.anchoredPosition = new Vector2(0,0.2f);
+
+        popup.GetComponent<PurchaseUI>().Setup(message,purchaseSuccess);
     }
 }
