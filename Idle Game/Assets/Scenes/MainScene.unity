@@ -3254,7 +3254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 1159306131}
-  currency: 1
+  currency: 0
 --- !u!114 &1700593616
 MonoBehaviour:
   m_ObjectHideFlags: 0
