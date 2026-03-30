@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class Upgrade : MonoBehaviour, IPointerClickHandler
 {
+    public string purchaseLog = "> upgrade purchased";
+    public string failPurchaseLog = "> insufficient funds";
+    
     public ResourceManager resourceManager;         // The Resource Manager script
     public float tickTime = 3f;                     // Time it takes for the upgrade to run
     private float timer;                            // Timer variable
@@ -73,10 +76,15 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
             autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " " + currency + ")\n" + upgradeName + ": " + tier);   // Displays text on the button. Should probably modify this to show how many currency the upgrade actually gives
             
             purchaseSuccess = true;
+
+            ConsoleManager.toLog = purchaseLog;
         }
 
         else
+        {
             purchaseSuccess = false;
+            ConsoleManager.toLog = failPurchaseLog;
+        }
         
         string message = purchaseSuccess ? "Successfully Purchased " + upgradeName : "Purchase Failed";
 
