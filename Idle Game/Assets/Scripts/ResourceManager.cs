@@ -97,7 +97,7 @@ public class ResourceManager : MonoBehaviour
                 Shells += 1;            // These numbers can be different for each if we so choose
                 break;
             case CurrencyType.Knives:
-                Knives += 30;
+                Knives += 1;
                 break;
             case CurrencyType.RaiStones:
                 raiStones += 1;
