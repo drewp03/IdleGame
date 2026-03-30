@@ -811,7 +811,7 @@ MonoBehaviour:
   canvasTransform: {fileID: 526630453}
   multiplier: 1
   paymentPrice: 30
-  upgradeName: Personal Chefs
+  upgradeName: Chef
   currency: 1
   critChance: 0
   critMult: 0
@@ -2444,9 +2444,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Buy Personal Chef (30 Knives)
+  m_text: 'Buy Chef (30 Knives)
 
-    Personal Chefs: 0'
+    Chefs: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2691aa4641c890e41a0ca8d2cf829a02, type: 2}
   m_sharedMaterial: {fileID: -4424268445995863188, guid: 2691aa4641c890e41a0ca8d2cf829a02, type: 2}
@@ -3041,7 +3041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceManager: {fileID: 1159306131}
-  currency: 1
+  currency: 0
 --- !u!114 &1700593616
 MonoBehaviour:
   m_ObjectHideFlags: 0
