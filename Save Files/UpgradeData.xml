@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListOfUpgrades>
+	<Upgrade>
+		<name></name>
+		<cost></cost>
+		<multiplier></multiplier>
+		<time></time>
+		<currency></currency>
+	</Upgrade>
+</ListOfUpgrades>
