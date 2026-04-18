@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Diagnostics;
+//using System.Diagnostics;
+using System.IO;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -67,6 +68,11 @@ public class ResourceManager : MonoBehaviour
     }
 
     void Update()
+    {
+        SetActiveUpgrades();
+    }
+
+    public void SetActiveUpgrades()
     {
         // Makes the upgrade button active once the player can afford the upgrade
         for (int i = 0; i < upgrades.Count; i++)
@@ -170,5 +176,75 @@ public class ResourceManager : MonoBehaviour
             default:
                 return 0;
         }
+    }
+
+    public void Save()
+    {
+        //referencing class to save data
+        GameSaveData data = new GameSaveData();
+
+        //saves current amounts to data
+        data.SavedShells = Shells;
+        data.SavedKnives = Knives;
+
+        //creates a list based on upgradeTiers
+        data.UpgradeTiers = new List<int>();
+
+        for(int i=0;i<upgrades.Count;i++)
+        {
+            //finding the component that holds the tier, then adding the tier to data
+            Upgrade upTier = upgrades[i].GetComponent<Upgrade>();
+            data.UpgradeTiers.Add(upTier.tier);
+        }
+
+        //saving data to json
+        string json = JsonUtility.ToJson(data);
+        string path = Application.persistentDataPath + "/save.json";
+
+        //writing data to json
+        File.WriteAllText(path,json);
+
+        Debug.Log("Successfully Saved!");
+    }
+
+    public void Load()
+    {
+        //finding path referenced in save
+        string path = Application.persistentDataPath + "/save.json";
+
+        if(File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
+
+            if(data == null)
+            {
+                //EXCEPTION FOR ASSIGNMENT
+                throw new System.Exception("Save file is NULL");
+            }
+
+            //taking the saved data and applying it to current data
+            Shells = data.SavedShells;
+            Knives = data.SavedKnives;
+
+            //loop to reset gameobjects as active or inactive
+            for(int i=0;i<upgrades.Count;i++)
+            {
+                if(i < data.UpgradeTiers.Count)
+                {
+                    upgrades[i].GetComponent<Upgrade>().SetTier(data.UpgradeTiers[i]);
+
+                    if(data.UpgradeTiers[i] >= 1)
+                    {
+                        upgrades[i].SetActive(true);
+                    }
+                    else
+                    {
+                        upgrades[i].SetActive(false);
+                    }
+                }
+            }
+        }
+        Debug.Log("Successfully Loaded!");
     }
 }

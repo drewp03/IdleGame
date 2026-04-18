@@ -10,7 +10,7 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
     public ResourceManager resourceManager;         // The Resource Manager script
     public float tickTime = 3f;                     // Time it takes for the upgrade to run
     private float timer;                            // Timer variable
-    private int tier;                               // Number of times the upgrade has been purchased
+    public int tier;                               // Number of times the upgrade has been purchased
 
     // UI and button elements
     public TextMeshProUGUI autoclickerText;
@@ -86,5 +86,17 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
         rect.anchoredPosition = new Vector2(0,0.2f);
 
         popup.GetComponent<PurchaseUI>().Setup(message,purchaseSuccess);
+    }
+
+    public void SetTier(int value)
+    {
+        tier = value;
+        autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " " + currency + ")\n" + upgradeName + ": " + tier);
+    }
+
+    public void SetProgress(float value)
+    {
+        progressBar.fillAmount = value;
+        timer = 0f;
     }
 }
