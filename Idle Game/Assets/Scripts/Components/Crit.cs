@@ -39,7 +39,6 @@ public class Crit : MonoBehaviour, IPointerClickHandler
         {
             upgrade.critMult += multIncreasePerLevel;
             upgrade.critChance += chancePerLevel;
-            //resourceManager.Shells -= cost;
             resourceManager.DecrimentCurrency(currency, cost);
             level++;
             purchaseSuccess = true;

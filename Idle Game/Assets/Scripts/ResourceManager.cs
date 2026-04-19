@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 //using System.Diagnostics;
 using System.IO;
+using System;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -200,11 +201,17 @@ public class ResourceManager : MonoBehaviour
         //saving data to json
         string json = JsonUtility.ToJson(data);
         string path = Application.persistentDataPath + "/save.json";
+        try
+        {
+            //writing data to json
+            File.WriteAllText(path, json);
 
-        //writing data to json
-        File.WriteAllText(path,json);
-
-        Debug.Log("Successfully Saved!");
+            Debug.Log("Successfully Saved!");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error saving file: {ex.Message}");
+        }
     }
 
     public void Load()
@@ -212,39 +219,46 @@ public class ResourceManager : MonoBehaviour
         //finding path referenced in save
         string path = Application.persistentDataPath + "/save.json";
 
-        if(File.Exists(path))
+        try
         {
-            string json = File.ReadAllText(path);
-            GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
-
-            if(data == null)
+            if (File.Exists(path))
             {
-                //EXCEPTION FOR ASSIGNMENT
-                throw new System.Exception("Save file is NULL");
-            }
+                string json = File.ReadAllText(path);
+                GameSaveData data = JsonUtility.FromJson<GameSaveData>(json);
 
-            //taking the saved data and applying it to current data
-            Shells = data.SavedShells;
-            Knives = data.SavedKnives;
-
-            //loop to reset gameobjects as active or inactive
-            for(int i=0;i<upgrades.Count;i++)
-            {
-                if(i < data.UpgradeTiers.Count)
+                if (data == null)
                 {
-                    upgrades[i].GetComponent<Upgrade>().SetTier(data.UpgradeTiers[i]);
+                    //EXCEPTION FOR ASSIGNMENT
+                    throw new System.Exception("Save file is NULL");
+                }
 
-                    if(data.UpgradeTiers[i] >= 1)
+                //taking the saved data and applying it to current data
+                Shells = data.SavedShells;
+                Knives = data.SavedKnives;
+
+                //loop to reset gameobjects as active or inactive
+                for (int i = 0; i < upgrades.Count; i++)
+                {
+                    if (i < data.UpgradeTiers.Count)
                     {
-                        upgrades[i].SetActive(true);
-                    }
-                    else
-                    {
-                        upgrades[i].SetActive(false);
+                        upgrades[i].GetComponent<Upgrade>().SetTier(data.UpgradeTiers[i]);
+
+                        if (data.UpgradeTiers[i] >= 1)
+                        {
+                            upgrades[i].SetActive(true);
+                        }
+                        else
+                        {
+                            upgrades[i].SetActive(false);
+                        }
                     }
                 }
             }
+            Debug.Log("Successfully Loaded!");
         }
-        Debug.Log("Successfully Loaded!");
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error loading file: {ex.Message}");
+        }
     }
 }

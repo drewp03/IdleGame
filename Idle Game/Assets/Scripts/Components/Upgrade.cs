@@ -47,13 +47,11 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
 
                 if (Random.Range(0f, 100f) < critChance)
                 {
-                    //resourceManager.Shells += tier * multiplier * (critMult / 100);    // Will need to modify this to work with any currency type
                     resourceManager.IncrementCurrency(currency, tier, multiplier, critMult / 100);
                     Debug.Log("Crit triggered");
                 }
                 else
                 {
-                    //resourceManager.Shells += tier * multiplier;    // Will need to modify this to work with any currency type
                     resourceManager.IncrementCurrency(currency, tier, multiplier);
                 }
             }
@@ -67,7 +65,6 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
     {
         if (resourceManager.GetCurrencyAmount(currency) >= paymentPrice)
         {
-            //resourceManager.Shells -= paymentPrice;             // Will need to modify this to work with any currency type
             resourceManager.DecrimentCurrency(currency, paymentPrice);
             tier++;
             autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " " + currency + ")\n" + upgradeName + ": " + tier);   // Displays text on the button. Should probably modify this to show how many currency the upgrade actually gives
