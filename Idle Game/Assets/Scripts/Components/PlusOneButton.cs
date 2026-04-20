@@ -12,5 +12,6 @@ public class PlusOneButton : MonoBehaviour, IPointerClickHandler
     {
         // Increments the selected currency when the button is pressed
         resourceManager.IncrementCurrency(currency);
+        ConsoleManager.toLog = "> +1 Shell";
     }
 }

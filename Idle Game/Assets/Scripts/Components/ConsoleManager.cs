@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class ConsoleManager : MonoBehaviour
 {
     public TextMeshProUGUI log;
-
     public string startText;
 
     public static string toLog;
+
+    [SerializeField] private int maxLines = 20;
 
     void Start()
     {
@@ -22,8 +22,16 @@ public class ConsoleManager : MonoBehaviour
     {
         if (toLog.Length > 0)
         {
-            // Add new log at the TOP instead of bottom
             log.text = toLog + "\n" + log.text;
+
+            List<string> lines = new List<string>(log.text.Split('\n'));
+
+            if (lines.Count > maxLines)
+            {
+                lines.RemoveRange(maxLines, lines.Count - maxLines);
+            }
+
+            log.text = string.Join("\n", lines);
 
             toLog = "";
         }

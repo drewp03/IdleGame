@@ -49,6 +49,7 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
                 {
                     resourceManager.IncrementCurrency(currency, tier, multiplier, critMult / 100);
                     Debug.Log("Crit triggered");
+                    ConsoleManager.toLog = "> Crit Triggered";
                 }
                 else
                 {
