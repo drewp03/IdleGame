@@ -38,24 +38,31 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
 
     void Update()
     {
-        // Makes the upgrade automatically run
         if (tier > 0)
         {
-            if (timer >= tickTime && tier > 0)
+            if (timer >= tickTime)
             {
                 timer = 0f;
 
-                if (Random.Range(0f, 100f) < critChance)
+                bool isCrit = Random.Range(0f, 100f) < critChance;
+
+                float amount = tier * multiplier;
+
+                if (isCrit)
                 {
+                    amount *= (critMult / 100f);
                     resourceManager.IncrementCurrency(currency, tier, multiplier, critMult / 100);
+
                     Debug.Log("Crit triggered");
-                    ConsoleManager.toLog = "> Crit Triggered";
+                    ConsoleManager.toLog = "<color=yellow>> Crit " + upgradeName + ": " + amount + " Shells</color>\"";
                 }
                 else
                 {
                     resourceManager.IncrementCurrency(currency, tier, multiplier);
+                    ConsoleManager.toLog = "> " + upgradeName + ": " + amount + " Shells";
                 }
             }
+
             timer += Time.deltaTime;
             progressBar.fillAmount = timer / tickTime;
         }
@@ -75,15 +82,19 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
 
         else
             purchaseSuccess = false;
-        
-        string message = purchaseSuccess ? "Successfully Purchased " + upgradeName : "Purchase Failed";
 
-        GameObject popup = Instantiate(popupPrefab, canvasTransform);
+        string message = purchaseSuccess
+            ? "<color=green>Successfully Purchased " + upgradeName + "</color>"
+            : "<color=red>Purchase Failed</color>";
+
+        ConsoleManager.toLog = message;
+
+        /*GameObject popup = Instantiate(popupPrefab, canvasTransform);
 
         RectTransform rect = popup.GetComponent<RectTransform>();
         rect.anchoredPosition = new Vector2(0,0.2f);
 
-        popup.GetComponent<PurchaseUI>().Setup(message,purchaseSuccess);
+        popup.GetComponent<PurchaseUI>().Setup(message,purchaseSuccess);*/
     }
 
     public void SetTier(int value)

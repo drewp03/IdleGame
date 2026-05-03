@@ -53,17 +53,22 @@ public class Crit : MonoBehaviour, IPointerClickHandler
         else
             purchaseSuccess = false;
 
-        string message = purchaseSuccess ? "Successfully Purchased " + upgradeName : "Purchase Failed";
+        string message = purchaseSuccess
+            ? "<color=green>Successfully Purchased " + upgradeName + "</color>"
+            : "<color=red>Purchase Failed</color>";
 
-        GameObject popup = Instantiate(popupPrefab, canvasTransform);
+        ConsoleManager.toLog = message;
+
+        RefreshText();
+
+        /*GameObject popup = Instantiate(popupPrefab, canvasTransform);
 
         RectTransform rect = popup.GetComponent<RectTransform>();
         rect.anchoredPosition = new Vector2(0,0.2f);
 
-        popup.GetComponent<PurchaseUI>().Setup(message,purchaseSuccess);
-        RefreshText();
+        popup.GetComponent<PurchaseUI>().Setup(message,purchaseSuccess);*/
     }
-    
+
     void RefreshText()
     {
         upgradeText.text = $"{upgrade.name} Upgrade: Crit Chance\n({cost} {currency}, {level}/{maxLevel})\nCurrent Stats: {upgrade.critChance}% Chance, {upgrade.critMult}% Mult";
