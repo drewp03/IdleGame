@@ -7,7 +7,6 @@ using TMPro;
 
 public class Prestige : MonoBehaviour
 {
-    public static int raiStones = 0;
     private int potentialRaiStones;
     public int prestigePrice = 1000;
 
@@ -35,12 +34,15 @@ public class Prestige : MonoBehaviour
 
     public void Start()
     {
-        raiStonesText.text = "Rai Stones: " + raiStones;
+        //raiStonesText.text = "Rai Stones: " + raiStones;
     }
 
     public void ResetScene()
     {
-        raiStones += potentialRaiStones;
+        resourceManager.RaiStones += potentialRaiStones;
+
+        resourceManager.SavePrestigeOnly();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

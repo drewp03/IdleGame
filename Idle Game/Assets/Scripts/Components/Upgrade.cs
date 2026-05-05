@@ -102,6 +102,12 @@ public class Upgrade : MonoBehaviour, IPointerClickHandler
         tier = value;
         autoclickerText.text = ("Buy " + upgradeName + " (" + paymentPrice + " " + currency + ")\n" + upgradeName + ": " + tier);
     }
+    
+    public void ResetTimer()
+    {
+        timer = 0f;
+        progressBar.fillAmount = 0;
+    }
 
     public void SetProgress(float value)
     {

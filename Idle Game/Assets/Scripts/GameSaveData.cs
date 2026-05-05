@@ -5,6 +5,7 @@ public class GameSaveData
 {
     public double SavedShells;
     public double SavedKnives;
+    public double SavedRai;
 
     public List<int> UpgradeTiers;
 

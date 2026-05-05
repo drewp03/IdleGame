@@ -26,6 +26,11 @@ public class ResourceManager : MonoBehaviour
     public TextMeshProUGUI knivesText;
     private double knives;
 
+    public TextMeshProUGUI raiText;
+    private static double raiStones;
+
+    public ResourceManager instance;
+
     public double Shells
     {
         get
@@ -53,13 +58,40 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    private double raiStones;
+    public double RaiStones
+    {
+        get
+        {
+            return raiStones;
+        }
+        set
+        {
+            raiStones = value;
+            raiText.text = "Rai Stones: " + raiStones;
+        }
+    }
+
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        Load();
+    }
 
     void Start()
     {
         // Set the text for each currency type
         shellText.text = ("Shells: " + shells);
         knivesText.text = ("Knives: " + knives);
+        raiText.text = ("Rai Stones: " + raiStones);
 
         // Sets all upgrade buttons to inactive
         for (int i = 0; i < upgrades.Count; i++)
@@ -78,16 +110,18 @@ public class ResourceManager : MonoBehaviour
         // Makes the upgrade button active once the player can afford the upgrade
         for (int i = 0; i < upgrades.Count; i++)
         {
+            if(upgrades[i] == null) continue;
+
             if (upgrades[i].GetComponent<Upgrade>().currency == CurrencyType.Shells)
             {
-                if (shells >= upgrades[i].GetComponent<Upgrade>().paymentPrice)
+                if (shells >= upgrades[i].GetComponent<Upgrade>().paymentPrice || upgrades[i].GetComponent<Upgrade>().tier >= 1)
                 {
                     upgrades[i].SetActive(true);
                 }
             }
             else if (upgrades[i].GetComponent<Upgrade>().currency == CurrencyType.Knives)
             {
-                if (knives >= upgrades[i].GetComponent<Upgrade>().paymentPrice)
+                if (knives >= upgrades[i].GetComponent<Upgrade>().paymentPrice || upgrades[i].GetComponent<Upgrade>().tier >= 1)
                 {
                     upgrades[i].SetActive(true);
                 }
@@ -107,7 +141,7 @@ public class ResourceManager : MonoBehaviour
                 Knives += 1;
                 break;
             case CurrencyType.RaiStones:
-                raiStones += 1;
+                RaiStones += 1;
                 break;
         }
     }
@@ -124,7 +158,7 @@ public class ResourceManager : MonoBehaviour
                 Knives += tier * multiplier;
                 break;
             case CurrencyType.RaiStones:
-                raiStones += tier * multiplier;
+                RaiStones += tier * multiplier;
                 break;
         }
     }
@@ -141,7 +175,7 @@ public class ResourceManager : MonoBehaviour
                 Knives += tier * multiplier * crit;
                 break;
             case CurrencyType.RaiStones:
-                raiStones += tier * multiplier * crit;
+                RaiStones += tier * multiplier * crit;
                 break;
         }
     }
@@ -158,7 +192,7 @@ public class ResourceManager : MonoBehaviour
                 Knives -= price;
                 break;
             case CurrencyType.RaiStones:
-                raiStones -= price;
+                RaiStones -= price;
                 break;
         }
     }
@@ -173,7 +207,7 @@ public class ResourceManager : MonoBehaviour
             case CurrencyType.Knives:
                 return Knives;
             case CurrencyType.RaiStones:
-                return raiStones;
+                return RaiStones;
             default:
                 return 0;
         }
@@ -187,6 +221,7 @@ public class ResourceManager : MonoBehaviour
         //saves current amounts to data
         data.SavedShells = Shells;
         data.SavedKnives = Knives;
+        data.SavedRai = RaiStones;
 
         //creates a list based on upgradeTiers
         data.UpgradeTiers = new List<int>();
@@ -214,6 +249,51 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
+    public void SavePrestigeOnly()
+    {
+        GameSaveData data = new GameSaveData();
+
+        //only saving raistones
+        data.SavedRai = RaiStones;
+
+        //resets everything else
+        data.SavedShells = 0;
+        data.SavedKnives = 0;
+
+        data.UpgradeTiers = new List<int>();
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            data.UpgradeTiers.Add(0); //reset all upgrade tiers
+        }
+
+        string json = JsonUtility.ToJson(data);
+        string path = Application.persistentDataPath + "/save.json";
+
+        File.WriteAllText(path, json);
+    }
+
+    public void ResetData()
+    {
+        GameSaveData data = new GameSaveData();
+
+        data.SavedRai = 0;
+        data.SavedShells = 0;
+        data.SavedKnives = 0;
+
+        data.UpgradeTiers = new List<int>();
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            data.UpgradeTiers.Add(0); //reset all upgrade tiers
+        }
+
+        string json = JsonUtility.ToJson(data);
+        string path = Application.persistentDataPath + "/save.json";
+
+        File.WriteAllText(path, json);
+
+        Load();
+    }
+
     public void Load()
     {
         //finding path referenced in save
@@ -235,6 +315,7 @@ public class ResourceManager : MonoBehaviour
                 //taking the saved data and applying it to current data
                 Shells = data.SavedShells;
                 Knives = data.SavedKnives;
+                RaiStones = data.SavedRai;
 
                 //loop to reset gameobjects as active or inactive
                 for (int i = 0; i < upgrades.Count; i++)
@@ -242,6 +323,7 @@ public class ResourceManager : MonoBehaviour
                     if (i < data.UpgradeTiers.Count)
                     {
                         upgrades[i].GetComponent<Upgrade>().SetTier(data.UpgradeTiers[i]);
+                        upgrades[i].GetComponent<Upgrade>().ResetTimer();
 
                         if (data.UpgradeTiers[i] >= 1)
                         {
