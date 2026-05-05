@@ -1378,7 +1378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.082902595, y: -2.057}
+  m_AnchoredPosition: {x: 0.082902595, y: -2.039}
   m_SizeDelta: {x: 160, y: 25.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &357915197
@@ -7727,7 +7727,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Buy Shell Singularty (10000 Shells)
+  m_text: 'Buy Shell Singularity (10000 Shells)
 
     Shell Singularities: 0'
   m_isRightToLeft: 0
